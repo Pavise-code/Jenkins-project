@@ -19,10 +19,13 @@ pipeline {
         }
 
         stage('Security Scan (SAST)') {
-             steps {
-                echo 'Analyse du code Python avec Bandit...'
-                /* On utilise l'image officielle de PyCQA pour Bandit */
-                sh 'docker run --rm -v $(pwd):/data pycqa/bandit -r /data'
+            steps {
+                echo 'Installation et analyse avec Bandit...'
+                /* On installe bandit directement dans l'agent Jenkins et on scanne le dossier actuel */
+                sh '''
+                    pip install bandit --break-system-packages || pip install bandit
+                    bandit -r . -f txt
+                '''
             }
         }
 
