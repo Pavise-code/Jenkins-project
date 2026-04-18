@@ -21,10 +21,8 @@ pipeline {
         stage('Security Scan (SAST)') {
             steps {
                 echo 'Analyse du code Python avec Bandit...'
-                /* IMPORTANT : On monte le dossier actuel $(pwd) dans le conteneur Bandit.
-                   Bandit va lire le code et s'arrêter s'il trouve des failles.
-                */
-                sh 'docker run --rm -v $(pwd):/src pysec/bandit -r /src'
+                // Utilisation de l'image officielle de PyCQA pour Bandit
+                sh 'docker run --rm -v $(pwd):/src pipelinecomponents/bandit bandit -r /src'
             }
         }
 
