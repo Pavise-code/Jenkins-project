@@ -19,10 +19,10 @@ pipeline {
         }
 
         stage('Security Scan (SAST)') {
-            steps {
+             steps {
                 echo 'Analyse du code Python avec Bandit...'
-                // Utilisation de l'image officielle de PyCQA pour Bandit
-                sh 'docker run --rm -v $(pwd):/src pipelinecomponents/bandit bandit -r /src'
+                /* On utilise l'image officielle de PyCQA pour Bandit */
+                sh 'docker run --rm -v $(pwd):/data pycqa/bandit -r /data'
             }
         }
 
